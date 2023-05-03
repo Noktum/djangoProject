@@ -46,7 +46,7 @@ class SearchResultsView(TemplateView):
         return context
 
 
-class Category1(TemplateView):
+class Category1(Bloglist):
     template_name = 'home.html'
 
     def get_context_data(self, **kwargs):
@@ -58,9 +58,7 @@ class Category1(TemplateView):
         return context
 
 
-class Category2(TemplateView):
-    template_name = 'home.html'
-
+class Category2(Category1):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         object_list = Post.objects.filter(
