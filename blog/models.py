@@ -14,9 +14,10 @@ class Post(models.Model):
         'auth.User',
         on_delete=models.CASCADE,  # Удаление поста
     )
-    category = models.ForeignKey('blog.Category', on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     published_date = models.DateTimeField(auto_now=True)
     body = models.TextField()  # Поле нашего поста
 
-    def __str__(self):
+    def __str__(self):  # Метод
         return self.title
+
