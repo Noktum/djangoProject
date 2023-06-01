@@ -1,4 +1,3 @@
-import django.views.generic
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import LoginView
@@ -38,6 +37,11 @@ def logout_user(request):
 class UserDetails(DetailView):
     template_name = 'users.html'
     model = User
+
+    def get_context_data(self, **kwargs):
+        context = super(UserDetails, self).get_context_data(**kwargs)
+        context['post'] = Post.objects.all()
+        return context
 
 
 class Bloglist(ListView):

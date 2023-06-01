@@ -48,7 +48,7 @@
                             <div class="container justify-content-center">
                             <div class="row">
                                 <div class="col" style="margin-top: 4%">
-                                    <a style="color: white">{{ user.username }}</a>
+                                    <a style="color: white">{{ request.user.username }}</a>
                                 </div>
                                 <div class="col">
                                     <a href="{% url 'logout' %}">
@@ -63,7 +63,6 @@
                             </a>
                         {% endif %}
                 </div>
-
                 <a class="navbar-brand bg-dark"></a>
                 <form method="get">
                     <select class="form-select bg-dark border-dark" style="color: white">
@@ -93,8 +92,9 @@
                                  style="background-image: linear-gradient(60deg, #29323c 0%, #485563 100%);">
                                 <div class="card-body text-white">
                                     <h2>{{ post.title }}</h2>
-                                    <a class="text-info" href="{% url 'user' post.author.pk %}"><p>Автор поста:
-                                        <b> {{ post.author }}</b></p></a>
+                                    <a class="text-info" href="{% url 'user' post.author.pk %}">
+                                        <p>Автор поста:<b>{{ post.author }}</b></p>
+                                    </a>
                                     <p>Раздел: <b> {{ post.category }}</b></p>
                                     <p> Дата публикации: <b> {{ post.published_date }}</b></p>
                                     <p>{{ post.body|slice:":500" }}</p>
@@ -128,7 +128,11 @@
                                                      aria-label="Previous"><</a></li>
                         {% endif %}
                         {% for p in paginator.page_range %}
-                            <li class="page-item"><a class="page-link" href="?page={{ p }}">{{ p }}</a></li>
+                            {% if p == page_obj.number %}
+                                <li class="page-item active"><a class="page-link" href="?page={{ p }}">{{ p }}</a></li>
+                                {% else %}
+                                <li class="page-item"><a class="page-link" href="?page={{ p }}">{{ p }}</a></li>
+                            {% endif %}
                         {% endfor %}
                         {% if page_obj.has_next %}
                             <li class="page-item"><a class="page-link"
